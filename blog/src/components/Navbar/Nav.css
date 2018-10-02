@@ -1,0 +1,18 @@
+.navTool{
+    background-color:var(--primary-color);
+    line-height: 3.5rem !important;
+}
+.navTitle {
+    display: block;
+    float: left;
+    line-height: 3.5rem !important;
+}
+
+.navControls{
+    color: #fff;
+    float: right;
+}
+
+.navIcons{
+    color:#fff;
+}

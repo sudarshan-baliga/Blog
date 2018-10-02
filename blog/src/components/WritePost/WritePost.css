@@ -1,0 +1,11 @@
+
+.editorWrapper{
+    width: 80%;
+    min-height: 600px;
+    position: relative;
+    margin: 30px auto;
+}
+
+.writePostTitle{
+    margin-top: 20px;
+}

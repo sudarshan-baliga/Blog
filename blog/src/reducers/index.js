@@ -1,5 +1,7 @@
 import { combineReducers } from 'redux';
-import simpleReducer from './SimpleReducer';
+import userData from './SigninReducer';
+
+
 export default combineReducers({
-    simpleReducer
+   userData
 });

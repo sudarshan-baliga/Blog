@@ -1,0 +1,29 @@
+.topImageProfile {
+    display: inline-block;
+    background-image: url("http://creativeloads.com/foto/triangle-background-214.jpg");
+    height: 400px;
+    width: 100%;
+    overflow: hidden;
+}
+
+
+
+.profileContainer{
+    position: absolute;
+    display: inline-block;
+    top: 40%;
+	left: 50%;
+    transform: translate(-50%, 0%);
+    width: 320px;
+    max-width: 90%;
+    padding: 30px;
+    border-radius: 100px !important;
+}
+
+.profilePic img{
+    top: 0px;
+    margin: 10px;
+    border-radius: 50%;
+    border:3px solid var(--primary-color);
+
+}

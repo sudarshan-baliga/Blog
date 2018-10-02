@@ -12,6 +12,6 @@ app.use(bodyParser.urlencoded({
 
 app.use("/", api);
 
-app.listen(process.env.PORT || 8080, () => {
-    console.log("listening to port 8080");
+app.listen(process.env.PORT || 3001, () => {
+    console.log("listening to port 3001");
 });

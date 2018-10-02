@@ -1,22 +1,53 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
+import {
+  BrowserRouter as Router,
+  Route,
+  Link,
+  Redirect,
+} from 'react-router-dom';
+import { connect } from 'react-redux';
 import './App.css';
-import Sample from './components/sample';
+import Signin from './components/Signin/Signin';
+import Profile from './components/Profile/profile'
+import WritePost from './components/WritePost/WritePost';
+//check for authentication and render the required route
+const PrivateRoute = ({ component: Component, auth: auth, ...rest }) => {
+  return (
+    <Route
+      {...rest}
+      render={props =>
+        auth == 'True' ? (
+          <Component {...props} />
+        ) : (
+            <Redirect
+              to={{
+                pathname: "/signin",
+                state: { from: props.location }
+              }}
+            />
+          )
+      }
+    />
+  )
+};
+
 class App extends Component {
   render() {
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-       
-          <Sample/>
-        </header>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
-      </div>
+      <Router>
+        <div className="App">
+          <PrivateRoute exact path="/" auth={this.props.auth} component={Profile} />
+          <PrivateRoute exact path="/profile" auth={this.props.auth} component={Profile} />
+          <PrivateRoute exact path="/writepost" auth={this.props.auth} component={WritePost} />
+          <Route export path="/signin" component={Signin} />
+        </div>
+      </Router>
     );
   }
 }
 
-export default App;
+function mapStateToProps(data) {
+  return { auth: data.userData.auth };
+}
+
+export default connect(mapStateToProps)(App);
