@@ -18,12 +18,16 @@ export default function signin(data) {
             }
         })
             .then(function (response) {
-                if (response.data.auth == 'True')
-                    dispatch({ type: 'SIGNIN_SUCCESS', payload: response.data.userData });
+              
+                if (response.data.auth == 'True'){
+                    let payload = {auth: 'True', 'userData':response.data.userData, 'jwt':response.data.jwt};
+                    dispatch({ type: 'SIGNIN_SUCCESS', payload: payload });
+                }
                 else
                     dispatch({ type: 'SIGNIN_FAILURE', payload: response.data });
             })
             .catch(function (response) {
+                console.log(response,'err');
                 dispatch({ type: 'SIGNIN_FAILURE', payload: response.data });
             });
     }
@@ -37,7 +41,7 @@ export function SignOut() {
 
 
 export function SendPost(data) {
-    console.log("reached action sendpost", data);
+    console.log(data);
     return (dispatch) => {
         axios({
             method: 'post',
@@ -45,12 +49,13 @@ export function SendPost(data) {
             data: data,
             config: {
                 headers: {
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
+                    'x-access-token': data.jwt,
                 }
             }
         })
             .then(function (response) {
-                console.log("fake")
+              
                 if (response.data.auth == 'True')
                     dispatch({ type: 'SIGNIN_SUCCESS', payload: response.data.userData });
                 else

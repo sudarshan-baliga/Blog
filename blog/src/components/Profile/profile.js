@@ -21,8 +21,8 @@ class Profile extends Component {
                         <img src="http://www.mediamanint.com/profiles/superman2.jpg" width="200px" alt="profilepic" />
                     </div>
                     <div className="name">
-                        <Typography variant="display1">{this.props.data.fname + " " + this.props.data.lname}</Typography>
-                        <Typography variant="title">{this.props.data.details}</Typography>
+                        <Typography variant="display1">{this.props.userData.fname + " " + this.props.userData.lname}</Typography>
+                        <Typography variant="title">{this.props.userData.details}</Typography>
                     </div>
                 </Paper>
             </React.Fragment>
@@ -30,8 +30,8 @@ class Profile extends Component {
     }
 }
 
-function mapStateToProps(data) {
-    return { data: data.userData.data };
+function mapStateToProps(store) {
+    return { userData: store.userData.userData };
 }
 
 export default connect(mapStateToProps)(Profile);
