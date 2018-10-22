@@ -9,7 +9,7 @@ export default function signin(data) {
     return (dispatch) => {
         axios({
             method: 'post',
-            url: SERVER_URL + '/signin',
+            url: SERVER_URL + '/handleUser/signin',
             data: loginData,
             config: {
                 headers: {
@@ -18,16 +18,16 @@ export default function signin(data) {
             }
         })
             .then(function (response) {
-              
-                if (response.data.auth == 'True'){
-                    let payload = {auth: 'True', 'userData':response.data.userData, 'jwt':response.data.jwt};
+
+                if (response.data.auth == 'True') {
+                    let payload = { auth: 'True', 'userData': response.data.userData, 'jwt': response.data.jwt };
                     dispatch({ type: 'SIGNIN_SUCCESS', payload: payload });
                 }
                 else
                     dispatch({ type: 'SIGNIN_FAILURE', payload: response.data });
             })
             .catch(function (response) {
-                console.log(response,'err');
+                console.log(response, 'err');
                 dispatch({ type: 'SIGNIN_FAILURE', payload: response.data });
             });
     }
@@ -45,7 +45,7 @@ export function SendPost(data) {
     return (dispatch) => {
         axios({
             method: 'post',
-            url: SERVER_URL + '/writePost',
+            url: SERVER_URL + '/posts/writePost',
             data: data,
             config: {
                 headers: {
@@ -55,7 +55,7 @@ export function SendPost(data) {
             }
         })
             .then(function (response) {
-              
+
                 if (response.data.auth == 'True')
                     dispatch({ type: 'SIGNIN_SUCCESS', payload: response.data.userData });
                 else

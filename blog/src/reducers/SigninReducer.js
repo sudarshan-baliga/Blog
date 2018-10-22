@@ -1,7 +1,6 @@
 const initialState = { auth: "False", data: "" };
 
 export default (state = initialState, action) => {
-    console.log('signin reducer',action)
     switch (action.type) {
         case 'SIGNIN_SUCCESS':
             return {
