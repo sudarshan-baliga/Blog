@@ -19,7 +19,7 @@ router.post('/writePost', verifyToken, (req, res, next) => {
         };
         postNum = results[0].postNum + 1;
         //insert the post
-        query = "INSERT INTO posts VALUES(" + postNum + ",'" + req.userName + "'," + 201 + ",'" + req.body.title + "','" + req.body.description + "','" + req.body.content + "', NOW());";
+        query = "INSERT INTO posts VALUES(" + postNum + ",'" + req.userName + "'," + req.body.cid + ",'" + req.body.title + "','" + req.body.description + "','" + req.body.content + "', NOW());";
         console.log(query);
         connection.query(query, function (error, results, fields) {
             if (error) {
@@ -41,7 +41,7 @@ router.post('/writePost', verifyToken, (req, res, next) => {
 
 //get all the posts by the user
 router.post('/getAllUserPost', verifyToken, function(req, res, next){
-    let query = "SELECT * FROM posts where user_name = '" + req.userName + "';";
+    let query = "SELECT user_name,pid,cid,title,description FROM posts where user_name = '" + req.userName + "';";
     connection.query(query, function (error, results, fields) {
         if (error) {
             res.status(500).send({

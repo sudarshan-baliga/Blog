@@ -6,7 +6,7 @@ import Typography from '@material-ui/core/Typography';
 import AccountIcon from '@material-ui/icons/AccountCircle';
 import PostIcon from '@material-ui/icons/LocalPostOffice';
 import SignOutIcon from '@material-ui/icons/ExitToApp';
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router-dom';
 import {SignOut} from '../../actions/index';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';

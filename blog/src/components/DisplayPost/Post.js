@@ -12,12 +12,16 @@ import Avatar from '@material-ui/core/Avatar';
 import Chip from '@material-ui/core/Chip';
 import CardHeader from '@material-ui/core/CardHeader';
 import IconButton from '@material-ui/core/IconButton';
-import MoreVertIcon from '@material-ui/icons/MoreVert';
+import DeleleteIcon from '@material-ui/icons/Delete';
 import red from '@material-ui/core/colors/red';
+import blue from '@material-ui/core/colors/blue';
+import './Post.css';
+import { Link } from 'react-router-dom'
 
 const styles = theme => ({
     card: {
-        maxWidth: 345,
+        maxWidth: "75%",
+        margin: '0 auto'
     },
     media: {
         // ⚠️ object-fit is not supported by IE 11.
@@ -28,52 +32,59 @@ const styles = theme => ({
         backgroundColor: "#2196f3",
     },
     avatar: {
-        backgroundColor: red[500],
-      },
+        backgroundColor: "#2196f3",
+    },
+    delete: {
+        color: red[500],
+    }
 });
 
 function Posts(props) {
     const { classes } = props;
-    console.log(props.content)
+    //to display delete buttom only if it is the owner
+    let deleteBtn;
+    if (props.owner == "true")
+        deleteBtn =
+            < IconButton>
+                <DeleleteIcon className={classes.delete} />
+            </IconButton >;
     return (
-        <Card className={classes.card}>
-            <CardHeader
-                avatar={
-                    <Avatar aria-label="Recipe" className={classes.avatar}>
-                        {props.content.user_name[0]}
-            </Avatar>
-                }
-                title={props.content.user_name}
-                subheader= {props.content.time}
-            />
-           
-            <CardActionArea>
-                <CardMedia
-                    component="img"
-                    alt="Contemplative Reptile"
-                    className={classes.media}
-                    height="140"
-                    image={require("../../images/programming.jpg")}
-                    title="Contemplative Reptile"
+        <div className="post">
+            <Card className={classes.card}>
+                <CardHeader
+                    avatar={
+                        <Avatar aria-label="Recipe" className={classes.avatar}>
+                            {props.content.user_name[0]}
+                        </Avatar>
+                    }
+                    action={deleteBtn}
+                    title={props.content.user_name}
+                    subheader={props.content.time}
+                    className="cardHeader"
                 />
-                <CardContent>
-                    <Typography gutterBottom variant="title" component="h2">
-                       {props.content.title}
-          </Typography>
-                    <Typography component="p">
-                        {props.content.description}
-          </Typography>
-                </CardContent>
-            </CardActionArea>
-            <CardActions>
-                <Button size="small" color="primary">
-                    Share
-        </Button>
-                <Button size="small" color="primary">
-                    Learn More
-        </Button>
-            </CardActions>
-        </Card>
+
+                <CardActionArea>
+                    <Link to={"/displayPost/" + props.pid}>
+                        <CardMedia
+                            component="img"
+                            alt="Contemplative Reptile"
+                            className={classes.media}
+                            height="140"
+                            image={require("../../images/programming.jpg")}
+                            title="Contemplative Reptile"
+                        />
+                        <CardContent>
+                            <Typography gutterBottom variant="title" component="h1">
+                                {props.content.title}
+                            </Typography>
+                            <Typography component="h3" variant="headline">
+                                {props.content.description}
+                            </Typography>
+                        </CardContent>
+                    </Link>
+                </CardActionArea>
+            </Card>
+        </div>
     );
 }
 

@@ -5,6 +5,7 @@
 *{
   padding: 0px;
   margin: 0px;
+  text-decoration: none;
 }
 :root {
   --primary-color: #2196f3; 

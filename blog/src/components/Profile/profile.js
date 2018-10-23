@@ -25,7 +25,7 @@ class Profile extends Component {
                     </div>
                 </Paper> */}
                 <div>
-                    <PostWrapper type = "user" name = {this.props.userData.user_name}/>
+                    <PostWrapper type = "user" name = {this.props.userData.user_name} owner = "true"/>
                 </div>
             </React.Fragment>
         )
