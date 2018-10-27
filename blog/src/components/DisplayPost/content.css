@@ -1,0 +1,18 @@
+.postContent{
+    max-width: 85%;
+    margin: 50px auto;
+    text-align: left;
+}
+
+.title{
+    text-align: center;
+    padding: 20px;
+    font-weight: 600;
+   font-size: 30px; 
+}
+
+
+
+.post-editor{
+    padding: 20px;
+}

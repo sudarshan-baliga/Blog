@@ -16,6 +16,8 @@
 .postTitle{
     width: 50% !important;
     max-width: 70% !important;
+    text-transform: capitalize;
+    color:red;
 }
 .postDescription {
     display: block;

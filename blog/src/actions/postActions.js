@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { func } from 'prop-types';
 const SERVER_URL = 'http://localhost:3001';
 
 export default function getAllPosts() {
@@ -9,7 +10,7 @@ export function getAllUserPosts(userData) {
     return (dispatch) => {
         axios({
             method: 'post',
-            url: SERVER_URL + '/posts/getAllUserPost',
+            url: SERVER_URL + '/posts/getAllUserPosts',
             data: userData,
             config: {
                 headers: {
@@ -32,6 +33,34 @@ export function getAllUserPosts(userData) {
     }
 }
 
+//home posts
+export function getRecentPosts(data){
+    return (dispatch) => {
+        axios({
+            method: 'post',
+            url: SERVER_URL + '/posts/getRecentPosts',
+            data: data,
+            config: {
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            }
+        })
+            .then(function (response) {
+                console.log(response);
+                if (response.status == 200) {
+                    let payload = { userPosts: response.data.posts };
+                    dispatch({ type: 'GET_RECENT_POSTS_SUCCESS', payload: payload });
+                }
+                else
+                    dispatch({ type: 'GET_RECENT_POSTS_FAILURE', payload: response.data });
+            })
+            .catch(function (response) {
+                dispatch({ type: 'GET_RECENT_POSTS_FAILURE', payload: response.data });
+            });
+    }
+}
+
 export function getPost(data) {
     return (dispatch) => {
         axios({
@@ -47,13 +76,14 @@ export function getPost(data) {
             .then(function (response) {
                 console.log(response);
                 if (response.status == 200) {
-                    let payload = { userPosts: response.data.posts };
-                    dispatch({ type: 'GET_PoST_SUCCESS', payload: payload });
+                    let payload = { userPosts: response.data.post };
+                    dispatch({ type: 'GET_POST_SUCCESS', payload: payload });
                 }
                 else
-                    dispatch({ type: 'GET_PoST_FAILURE', payload: response.data });
+                    dispatch({ type: 'GET_POST_FAILURE', payload: response.data });
             })
             .catch(function (response) {
+                console.log(response);
                 dispatch({ type: 'GET_PoST_FAILURE', payload: response.data });
             });
     }

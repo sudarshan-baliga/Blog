@@ -41,6 +41,21 @@ const styles = theme => ({
 
 function Posts(props) {
     const { classes } = props;
+    //set the correct image
+    var image;
+    switch (props.content.cid) {
+        case 201:
+            image = require("../../images/programming.jpg");
+            break;
+        case 202:
+            image = require("../../images/cooking.jpg");
+            break;
+        case 203:
+            image = require("../../images/travel.jpg");
+            break;
+        default:
+            image = require("../../images/programming.jpg");
+    }
     //to display delete buttom only if it is the owner
     let deleteBtn;
     if (props.owner == "true")
@@ -69,15 +84,15 @@ function Posts(props) {
                             component="img"
                             alt="Contemplative Reptile"
                             className={classes.media}
-                            height="140"
-                            image={require("../../images/programming.jpg")}
+                            height="250"
+                            image={image}
                             title="Contemplative Reptile"
                         />
                         <CardContent>
-                            <Typography gutterBottom variant="title" component="h1">
+                            <Typography gutterBottom variant="title" component="h1" className = "title">
                                 {props.content.title}
                             </Typography>
-                            <Typography component="h3" variant="headline">
+                            <Typography variant="subheading">
                                 {props.content.description}
                             </Typography>
                         </CardContent>

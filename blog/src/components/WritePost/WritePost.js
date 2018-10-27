@@ -29,6 +29,9 @@ const styles = theme => ({
   selectEmpty: {
     marginTop: theme.spacing.unit * 2,
   },
+  title:{
+    textTransform: 'capitalize',
+  }
 });
 
 
@@ -165,6 +168,6 @@ function mapDispatchToProps(dispatch) {
 
 
 export default compose(
-  withStyles(styles, { name: 'Cart' }),
+  withStyles(styles, { }),
   connect(mapStateToProps, mapDispatchToProps)
 )(WritePost);

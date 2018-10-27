@@ -40,8 +40,8 @@ router.post('/writePost', verifyToken, (req, res, next) => {
 
 
 //get all the posts by the user
-router.post('/getAllUserPost', verifyToken, function(req, res, next){
-    let query = "SELECT user_name,pid,cid,title,description FROM posts where user_name = '" + req.userName + "';";
+router.post('/getAllUserPosts', verifyToken, function(req, res, next){
+    let query = "SELECT user_name,pid,cid,title,description,time     FROM posts where user_name = '" + req.userName + "';";
     connection.query(query, function (error, results, fields) {
         if (error) {
             res.status(500).send({
@@ -54,6 +54,47 @@ router.post('/getAllUserPost', verifyToken, function(req, res, next){
             status: "SUCCESS",
             message: "post retrieved succesfully",
             posts: results,
+        });
+    });
+});
+
+//get recent posts for home page
+
+router.post('/getRecentPosts', verifyToken, function(req, res, next){
+    let query = "SELECT user_name,pid,cid,title,description,time  FROM posts ;";
+    connection.query(query, function (error, results, fields) {
+        if (error) {
+            res.status(500).send({
+                status: "FAILURE",
+                message: "not able to get the recent posts"
+            });
+            throw error;
+        };
+        res.status(200).send({
+            status: "SUCCESS",
+            message: "recent posts retrieved succesfully",
+            posts: results,
+        });
+    });
+});
+
+
+
+//get a single post
+router.post('/getPost', verifyToken, function(req, res, next){
+    let query = "SELECT * FROM posts where pid = " + req.body.pid + ";";
+    connection.query(query, function (error, results, fields) {
+        if (error) {
+            res.status(500).send({
+                status: "FAILURE",
+                message: "not able to get the post"
+            });
+            throw error;
+        };
+        res.status(200).send({
+            status: "SUCCESS",
+            message: "post retrieved succesfully",
+            post: results[0],
         });
     });
 });

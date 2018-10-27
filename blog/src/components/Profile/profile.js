@@ -13,19 +13,22 @@ class Profile extends Component {
         return (
             <React.Fragment>
                 <Navbar />
-                {/* <div className="topImageProfile">
+                <div className="topImageProfile">
                 </div>
                 <Paper className='profileContainer'>
                     <div className="profilePic">
-                        <img src="http://www.mediamanint.com/profiles/superman2.jpg" width="200px" alt="profilepic" />
+                        <img src={require('../../images/superman2.jpg')} width="200px" alt="profilepic" />
                     </div>
                     <div className="name">
-                        <Typography variant="display1">{this.props.userData.fname + " " + this.props.userData.lname}</Typography>
-                        <Typography variant="title">{this.props.userData.details}</Typography>
+                        <Typography variant="title" component="h1">{this.props.userData.fname + " " + this.props.userData.lname}</Typography>
+                        <Typography variant="subheading">{this.props.userData.details}</Typography>
                     </div>
-                </Paper> */}
+                </Paper>
+                {/* <Typography variant="title" component="h1" className = "title descriptionHelper"  >
+                               Posts by the user
+                </Typography> */}
                 <div>
-                    <PostWrapper type = "user" name = {this.props.userData.user_name} owner = "true"/>
+                    <PostWrapper type="user" name={this.props.userData.user_name} owner="true" />
                 </div>
             </React.Fragment>
         )

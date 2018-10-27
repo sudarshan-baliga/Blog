@@ -5,6 +5,7 @@ import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import AccountIcon from '@material-ui/icons/AccountCircle';
 import PostIcon from '@material-ui/icons/LocalPostOffice';
+import HomeIcon from '@material-ui/icons/Home';
 import SignOutIcon from '@material-ui/icons/ExitToApp';
 import { Link } from 'react-router-dom';
 import {SignOut} from '../../actions/index';
@@ -34,6 +35,11 @@ class NavBar extends React.Component {
                             Blog
                          </Typography>
                         <div className = "navControls">
+                        <Link to="/home">
+                                <IconButton >
+                                    <HomeIcon className ="navIcons" />
+                                </IconButton>
+                            </Link>
                             <Link to="/writepost">
                                 <IconButton >
                                     <PostIcon className ="navIcons" />

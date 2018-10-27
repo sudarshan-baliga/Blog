@@ -57,9 +57,9 @@ export function SendPost(data) {
             .then(function (response) {
 
                 if (response.data.auth == 'True')
-                    dispatch({ type: 'SIGNIN_SUCCESS', payload: response.data.userData });
+                    dispatch({ type: 'SEND_POST_SUCCESS', payload: response.data.userData });
                 else
-                    dispatch({ type: 'SIGNIN_FAILURE', payload: response.data });
+                    dispatch({ type: 'SEND_POST_FAILURE', payload: response.data });
             })
             .catch(function (response) {
                 dispatch({ type: 'SIGNIN_FAILURE', payload: response.data });

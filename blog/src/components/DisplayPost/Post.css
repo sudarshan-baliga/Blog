@@ -5,3 +5,7 @@
 .cardHeader{
     text-align: left !important;
 }
+
+.postTitle{
+    text-transform: capitalize;
+}
