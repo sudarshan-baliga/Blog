@@ -19,7 +19,7 @@ export function getAllUserPosts(userData) {
             }
         })
             .then(function (response) {
-                console.log(response);
+                console.log(response.data);
                 if (response.status == 200) {
                     let payload = { userPosts: response.data.posts };
                     dispatch({ type: 'GET_ALL_USER_POSTS_SUCCESS', payload: payload });

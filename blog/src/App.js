@@ -39,7 +39,7 @@ class App extends Component {
       <Router>
         <div className="App">
           <PrivateRoute exact path="/" auth={this.props.auth} component={Profile} />
-          <PrivateRoute exact path="/profile" auth={this.props.auth} component={Profile} />
+          <PrivateRoute  path="/profile" auth={this.props.auth} component={Profile} />
           <PrivateRoute exact path="/home" auth={this.props.auth} component={Home} />
           <PrivateRoute exact path="/writepost" auth={this.props.auth} component={WritePost} />
           <PrivateRoute path = "/displayPost" auth = {this.props.auth} component = {DisplayPostContent} />

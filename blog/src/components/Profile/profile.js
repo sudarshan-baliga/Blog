@@ -5,11 +5,47 @@ import './profile.css'
 import { connect } from 'react-redux';
 import Navbar from '../Navbar/Navbar';
 import PostWrapper from '../DisplayPost/Wrapper';
+import { getProfile } from '../../actions/profileActions';
+import { bindActionCreators } from 'redux';
+import CircularProgress from '@material-ui/core/CircularProgress';
+
 class Profile extends Component {
     constructor(props) {
         super(props);
+        this.state = { loading: true, profileData: [], owner: "true" };
     }
+
+    componentWillMount() {
+        var profileName = this.props.location.pathname.split('/').pop();
+        console.log("mounting", profileName)
+        if (profileName == 'profile')
+            profileName = this.props.userData.user_name;
+
+        if (profileName == this.props.userData.user_name) {
+            this.setState(this.setState({ profileData: this.props.userData, loading: false }))
+        }
+        else {
+            let data = { profileName: profileName, jwt: this.props.jwt };
+            this.props.getProfile(data);
+        }
+    }
+
+
+    componentWillReceiveProps(nextProps) {
+        if (this.props.location.pathname.split('/').pop() != 'profile')
+            this.setState({ loading: false, profileData: nextProps.currentProfile });
+        else
+            this.setState({ loading: false, profileData: nextProps.userData });
+    }
+
     render() {
+        if (this.state.loading) {
+            return (
+                <div>
+                    <CircularProgress size={200} />
+                </div>
+            );
+        }
         return (
             <React.Fragment>
                 <Navbar />
@@ -20,25 +56,29 @@ class Profile extends Component {
                         <img src={require('../../images/superman2.jpg')} width="200px" alt="profilepic" />
                     </div>
                     <div className="name">
-                        <Typography variant="title" component="h1">{this.props.userData.fname + " " + this.props.userData.lname}</Typography>
-                        <Typography variant="subheading">{this.props.userData.details}</Typography>
+                        <Typography variant="title" component="h1">{this.state.profileData.fname + " " + this.state.profileData.lname}</Typography>
+                        <Typography variant="subheading">{this.state.profileData.details}</Typography>
                     </div>
                 </Paper>
                 {/* <Typography variant="title" component="h1" className = "title descriptionHelper"  >
                                Posts by the user
                 </Typography> */}
                 <div>
-                    <PostWrapper type="user" name={this.props.userData.user_name} owner="true" />
+                    <PostWrapper type="user" name={this.state.profileData.user_name} owner={this.state.owner} />
                 </div>
             </React.Fragment>
         )
     }
 }
 
-function mapStateToProps(store) {
-    return { userData: store.userData.userData };
+function mapDispatchToProps(dispatch) {
+    return bindActionCreators({ getProfile }, dispatch);
 }
 
 
+function mapStateToProps(store) {
+    console.log(store.currentProfile);
+    return { userData: store.userData.userData, currentProfile: store.currentProfile, jwt: store.userData.jwt };
+}
 
-export default connect(mapStateToProps)(Profile);
+export default connect(mapStateToProps, mapDispatchToProps)(Profile);

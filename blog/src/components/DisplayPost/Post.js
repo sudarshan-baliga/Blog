@@ -66,18 +66,19 @@ function Posts(props) {
     return (
         <div className="post">
             <Card className={classes.card}>
-                <CardHeader
-                    avatar={
-                        <Avatar aria-label="Recipe" className={classes.avatar}>
-                            {props.content.user_name[0]}
-                        </Avatar>
-                    }
-                    action={deleteBtn}
-                    title={props.content.user_name}
-                    subheader={props.content.time}
-                    className="cardHeader"
-                />
-
+                <Link to={"/profile/" + props.content.user_name}>
+                    <CardHeader
+                        avatar={
+                            <Avatar aria-label="Recipe" className={classes.avatar}>
+                                {props.content.user_name[0]}
+                            </Avatar>
+                        }
+                        action={deleteBtn}
+                        title={props.content.user_name}
+                        subheader={props.content.time}
+                        className="cardHeader"
+                    />
+                </Link>
                 <CardActionArea>
                     <Link to={"/displayPost/" + props.pid}>
                         <CardMedia
@@ -89,7 +90,7 @@ function Posts(props) {
                             title="Contemplative Reptile"
                         />
                         <CardContent>
-                            <Typography gutterBottom variant="title" component="h1" className = "title">
+                            <Typography gutterBottom variant="title" component="h1" className="title">
                                 {props.content.title}
                             </Typography>
                             <Typography variant="subheading">

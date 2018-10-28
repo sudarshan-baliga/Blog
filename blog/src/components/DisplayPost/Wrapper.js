@@ -16,8 +16,7 @@ class Wrapper extends Component {
 
     componentWillMount() {
         if (this.props.type == "user") {
-            let data = { userName: this.props.name, jwt: this.props.jwt };
-            console.log("userPosts")
+            let data = { profileName: this.props.name, jwt: this.props.jwt };
             this.props.getAllUserPosts(data);
         }
         else {
@@ -28,6 +27,7 @@ class Wrapper extends Component {
 
 
     componentWillReceiveProps(nextProps) {
+        console.log("next props in wrapper", nextProps)
         this.setState({ loading: false, userPosts: nextProps.userPosts, recentPosts: nextProps.recentPosts });
     }
 

@@ -41,7 +41,7 @@ router.post('/writePost', verifyToken, (req, res, next) => {
 
 //get all the posts by the user
 router.post('/getAllUserPosts', verifyToken, function(req, res, next){
-    let query = "SELECT user_name,pid,cid,title,description,time     FROM posts where user_name = '" + req.userName + "';";
+    let query = "SELECT user_name,pid,cid,title,description,time     FROM posts where user_name = '" + req.body.profileName + "';";
     connection.query(query, function (error, results, fields) {
         if (error) {
             res.status(500).send({
@@ -61,7 +61,7 @@ router.post('/getAllUserPosts', verifyToken, function(req, res, next){
 //get recent posts for home page
 
 router.post('/getRecentPosts', verifyToken, function(req, res, next){
-    let query = "SELECT user_name,pid,cid,title,description,time  FROM posts ;";
+    let query = "SELECT user_name,pid,cid,title,description,time  FROM posts ORDER BY time DESC;";
     connection.query(query, function (error, results, fields) {
         if (error) {
             res.status(500).send({

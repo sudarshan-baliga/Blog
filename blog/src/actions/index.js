@@ -9,7 +9,7 @@ export default function signin(data) {
     return (dispatch) => {
         axios({
             method: 'post',
-            url: SERVER_URL + '/handleUser/signin',
+            url: SERVER_URL + '/handleuser/signin',
             data: loginData,
             config: {
                 headers: {
