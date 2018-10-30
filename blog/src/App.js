@@ -10,7 +10,7 @@ import './App.css';
 import Signin from './components/Signin/Signin';
 import Profile from './components/Profile/profile'
 import WritePost from './components/WritePost/WritePost';
-import DisplayPostContent from './components/DisplayPost/content';
+import DisplayPostContent from './components/DisplayPost/Content/Content';
 import Home from './components/Home/Home'
 //check for authentication and render the required route
 const PrivateRoute = ({ component: Component, auth: auth, ...rest }) => {
@@ -42,7 +42,7 @@ class App extends Component {
           <PrivateRoute  path="/profile" auth={this.props.auth} component={Profile} />
           <PrivateRoute exact path="/home" auth={this.props.auth} component={Home} />
           <PrivateRoute exact path="/writepost" auth={this.props.auth} component={WritePost} />
-          <PrivateRoute path = "/displayPost" auth = {this.props.auth} component = {DisplayPostContent} />
+          <PrivateRoute path = "/displaypost" auth = {this.props.auth} component = {DisplayPostContent} />
           <Route export path="/signin" component={Signin} />
         </div>
       </Router>

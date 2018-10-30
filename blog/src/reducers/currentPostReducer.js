@@ -1,7 +1,6 @@
 var initialState = {};
 
 export default function(state = initialState, action){
-    console.log(action);
     switch (action.type) {
         case 'GET_POST_SUCCESS':
             return action.payload;

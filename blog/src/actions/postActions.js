@@ -1,5 +1,4 @@
 import axios from 'axios';
-import { func } from 'prop-types';
 const SERVER_URL = 'http://localhost:3001';
 
 export default function getAllPosts() {
@@ -34,7 +33,7 @@ export function getAllUserPosts(userData) {
 }
 
 //home posts
-export function getRecentPosts(data){
+export function getRecentPosts(data) {
     return (dispatch) => {
         axios({
             method: 'post',
@@ -88,3 +87,5 @@ export function getPost(data) {
             });
     }
 }
+
+

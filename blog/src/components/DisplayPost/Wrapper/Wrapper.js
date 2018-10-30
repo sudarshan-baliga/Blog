@@ -5,7 +5,6 @@ import { bindActionCreators } from 'redux';
 import { getAllUserPosts } from '../../../actions/postActions';
 import { getRecentPosts } from '../../../actions/postActions';
 import CircularProgress from '@material-ui/core/CircularProgress';
-
 import './Wrapper.css';
 
 class Wrapper extends Component {
@@ -48,6 +47,7 @@ class Wrapper extends Component {
             for (var i = 0; i < this.props.userPosts.length; i++) {
                 posts.push(<Post content={this.props.userPosts[i]} pid={this.props.userPosts[i].pid} key={this.props.userPosts[i].pid} owner={owner} />);
             }
+            
             return (
                 <React.Fragment>
                     <div className="postsWrapper">

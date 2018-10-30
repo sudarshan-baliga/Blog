@@ -4,7 +4,7 @@ import Typography from '@material-ui/core/Typography';
 import './profile.css'
 import { connect } from 'react-redux';
 import Navbar from '../Navbar/Navbar';
-import PostWrapper from '../DisplayPost/Wrapper';
+import PostWrapper from '../DisplayPost/Wrapper/Wrapper';
 import { getProfile } from '../../actions/profileActions';
 import { bindActionCreators } from 'redux';
 import CircularProgress from '@material-ui/core/CircularProgress';
@@ -18,7 +18,7 @@ class Profile extends Component {
     componentWillMount() {
         var profileName = this.props.location.pathname.split('/').pop();
         console.log("mounting", profileName)
-        if (profileName == 'profile')
+        if (profileName == 'profile' || profileName == ''  )
             profileName = this.props.userData.user_name;
 
         if (profileName == this.props.userData.user_name) {

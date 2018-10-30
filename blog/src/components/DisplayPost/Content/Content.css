@@ -4,15 +4,15 @@
     text-align: left;
 }
 
-.title{
+.title {
     text-align: center;
     padding: 20px;
     font-weight: 600;
-   font-size: 30px; 
+    font-size: 30px;
 }
 
 
 
-.post-editor{
+.post-editor {
     padding: 20px;
 }

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import NavBar from '../Navbar/Navbar';
+import NavBar from '../../Navbar/Navbar';
+import Comments from '../Comments/Comments';
 import PropTypes from 'prop-types';
 import { Editor } from 'react-draft-wysiwyg';
 import { EditorState, ContentState } from 'draft-js';
@@ -7,13 +8,11 @@ import htmlToDraft from 'html-to-draftjs';
 import { withStyles } from '@material-ui/core/styles';
 import CardHeader from '@material-ui/core/CardHeader';
 import Avatar from '@material-ui/core/Avatar';
-
-import Typography from '@material-ui/core/Typography';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { getPost } from '../../actions/postActions';
+import { getPost } from '../../../actions/postActions';
 import CircularProgress from '@material-ui/core/CircularProgress';
-import './content.css';
+import './Content.css';
 import compose from 'recompose/compose';
 const styles = theme => ({
     root: {
@@ -31,10 +30,11 @@ const styles = theme => ({
     },
 });
 
+
 class DisplayPostContent extends Component {
     constructor(props) {
         super(props);
-        this.state = { loading: true, title: '', content: '', author: '', }
+        this.state = { loading: true, title: '', content: '', author: '' }
     }
     //get the required post when componenet is mounting
     componentWillMount() {
@@ -44,7 +44,6 @@ class DisplayPostContent extends Component {
 
     componentWillReceiveProps(nextProps) {
         let currentPost = nextProps.currentPost.userPosts;
-        console.log(currentPost);
         let currentPid = currentPost.pid;
         let pid = this.props.location.pathname.split("/").pop();
         if (currentPid == pid) {
@@ -64,6 +63,7 @@ class DisplayPostContent extends Component {
             editorState
         });
     }
+
     render() {
         const { editorState } = this.state;
         const { classes } = this.props;
@@ -102,7 +102,7 @@ class DisplayPostContent extends Component {
                             editorClassName="post-editor"
                         />
                     </div>
-
+                    <Comments/>
                 </div>
             );
     }

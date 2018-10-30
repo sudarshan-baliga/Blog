@@ -3,7 +3,7 @@ import Navbar from '../Navbar/Navbar';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { SendPost } from '../../actions'
-import PostWrapper from '../DisplayPost/Wrapper';
+import PostWrapper from '../DisplayPost/Wrapper/Wrapper';
 
 import './Home.css';
 

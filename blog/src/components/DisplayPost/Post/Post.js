@@ -16,7 +16,7 @@ import DeleleteIcon from '@material-ui/icons/Delete';
 import red from '@material-ui/core/colors/red';
 import blue from '@material-ui/core/colors/blue';
 import './Post.css';
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router-dom';
 
 const styles = theme => ({
     card: {
@@ -45,16 +45,16 @@ function Posts(props) {
     var image;
     switch (props.content.cid) {
         case 201:
-            image = require("../../images/programming.jpg");
+            image = require("../../../images/programming.jpg");
             break;
         case 202:
-            image = require("../../images/cooking.jpg");
+            image = require("../../../images/cooking.jpg");
             break;
         case 203:
-            image = require("../../images/travel.jpg");
+            image = require("../../../images/travel.jpg");
             break;
         default:
-            image = require("../../images/programming.jpg");
+            image = require("../../../images/programming.jpg");
     }
     //to display delete buttom only if it is the owner
     let deleteBtn;
@@ -69,7 +69,7 @@ function Posts(props) {
                 <Link to={"/profile/" + props.content.user_name}>
                     <CardHeader
                         avatar={
-                            <Avatar aria-label="Recipe" className={classes.avatar}>
+                            <Avatar className={classes.avatar}>
                                 {props.content.user_name[0]}
                             </Avatar>
                         }
@@ -80,7 +80,7 @@ function Posts(props) {
                     />
                 </Link>
                 <CardActionArea>
-                    <Link to={"/displayPost/" + props.pid}>
+                    <Link to={"/displaypost/" + props.pid}>
                         <CardMedia
                             component="img"
                             alt="Contemplative Reptile"
