@@ -29,6 +29,33 @@ router.post('/signin', (req, res, next) => {
   });
 });
 
+//handle signup
+router.post('/signup', (req, res, next) => {
+  let query = "INSERT INTO Users VALUES("
+    + connection.escape(req.body.userName) +
+    "," + connection.escape(req.body.password) +
+    "," + connection.escape(req.body.fname) +
+    "," + connection.escape(req.body.lname) +
+    "," + connection.escape(req.body.about) + ");";
+  console.log(query);
+  connection.query(query, function (error, results, fields) {
+    if (error) {
+      console.log(error);
+      res.status(500).send({
+        auth: 'False',
+        message: 'There was a problem',
+        userData: []
+      });
+    }
+    var token = createToken(req.body.userName, req.body.password);
+    res.status(201).send({
+      auth: 'True',
+      userData: results[0],
+      jwt: token
+    });
+  });
+});
+
 //handle getuser
 router.post('/getuserprofile', (req, res, next) => {
   let query = "SELECT * from Users where user_name = '" + req.body.profileName + "';";
@@ -36,7 +63,7 @@ router.post('/getuserprofile', (req, res, next) => {
   connection.query(query, function (error, results, fields) {
     if (error) throw error;
     // if user exists send data
-    console.log(results,query, req.body);
+    console.log(results, query, req.body);
     if (results.length > 0) {
       res.status(200).send({
         profileData: results[0],

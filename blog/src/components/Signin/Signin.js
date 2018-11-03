@@ -9,6 +9,7 @@ import Avatar from '@material-ui/core/Avatar';
 import LockIcon from '@material-ui/icons/LockOutlined';
 import './Signin.css';
 import signin from '../../actions';
+import { Link } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import {
@@ -84,7 +85,18 @@ class Signin extends Component {
                             onClick={this.requestSigin}
                         >
                             Sign in
-            </Button>
+                         </Button>
+                        <Typography className="info">Dont have an account?</Typography>
+                        <Link to="/signup">
+                            <Button
+                                fullWidth
+                                variant="raised"
+                                style={btnStyle}
+                                className="signInBtn"
+                            >
+                                Sign Up
+                        </Button>
+                        </Link>
                     </form>
                 </Paper>
             </React.Fragment>

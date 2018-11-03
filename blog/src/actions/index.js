@@ -41,7 +41,7 @@ export function SignOut() {
 
 
 //changeStatus for required items
-export function changeStatus(data){
+export function changeStatus(data) {
     console.log(data);
     return (dispatch) => {
         dispatch(data.type, data.payload);

@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import PostWrapper from '../DisplayPost/Wrapper/Wrapper';
+import Typography from '@material-ui/core/Typography';
 
 import './Home.css';
 class Home extends Component {
@@ -17,9 +18,8 @@ class Home extends Component {
             <React.Fragment>
                 <Navbar />
                 <div className="categories boxShadow">
-                    < Link to="/home">
-                        <Chip label="All" className="categoryChips boxShadow" />
-                    </ Link>
+                    <Typography variant="title">Filter</Typography>
+
                     < Link to="/home/201">
                         <Chip label="Programming" className="categoryChips boxShadow" />
                     </ Link>
@@ -29,6 +29,9 @@ class Home extends Component {
                     <Link to="/home/203">
                         <Chip label="Travel" className="categoryChips boxShadow" />
                     </Link>
+                    < Link to="/home">
+                        <Chip label="All" className="categoryChips boxShadow" />
+                    </ Link>
                 </div>
                 <PostWrapper type="user" type="home" filter={this.props.location.pathname.split('/').pop()} />
             </React.Fragment>
