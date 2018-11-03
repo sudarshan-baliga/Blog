@@ -1,5 +1,5 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import PropTypes, { func } from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
@@ -17,6 +17,10 @@ import red from '@material-ui/core/colors/red';
 import blue from '@material-ui/core/colors/blue';
 import './Post.css';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { deletePost } from '../../../actions/postActions';
+import compose from 'recompose/compose';
 
 const styles = theme => ({
     card: {
@@ -39,6 +43,12 @@ const styles = theme => ({
     }
 });
 
+function handleDelete(props) {
+    let data = {jwt:props.jwt, pid:props.pid};
+    props.deletePost(data);
+
+}
+
 function Posts(props) {
     const { classes } = props;
     //set the correct image
@@ -58,10 +68,10 @@ function Posts(props) {
     }
     //to display delete buttom only if it is the owner
     let deleteBtn;
-    if (props.owner == "true")
+    if (props.owner == true)
         deleteBtn =
             < IconButton>
-                <DeleleteIcon className={classes.delete} />
+                <DeleleteIcon className={classes.delete} onClick={() => { handleDelete(props) }} />
             </IconButton >;
     return (
         <div className="post">
@@ -107,5 +117,18 @@ function Posts(props) {
 Posts.propTypes = {
     classes: PropTypes.object.isRequired,
 };
+function mapDispatchToProps(dispatch) {
+    return bindActionCreators({ deletePost }, dispatch);
+}
 
-export default withStyles(styles)(Posts);
+function mapStateToProps(data) {
+    return { jwt: data.userData.jwt };
+}
+
+
+export default compose(
+    withStyles(styles, { name: 'Cart' }),
+    connect(mapStateToProps, mapDispatchToProps)
+)(Posts);
+
+

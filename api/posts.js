@@ -7,7 +7,7 @@ var connection = require('../lib/db');
 //handle writePost
 router.post('/writePost', verifyToken, (req, res, next) => {
     //get the number of posts to create the post num
-    let query = "SELECT COUNT(*) as postNum FROM posts";
+    let query = "SELECT MAX(pid) as postNum FROM posts";
     let postNum = 0;
     connection.query(query, function (error, results, fields) {
         if (error) {
@@ -32,7 +32,7 @@ router.post('/writePost', verifyToken, (req, res, next) => {
             console.log("post inserted successfully");
             res.status(201).send({
                 status: "SUCCESS",
-                message: "post inserted successfully"
+                data: { postNumber: postNum }
             });
         });
     });
@@ -40,7 +40,7 @@ router.post('/writePost', verifyToken, (req, res, next) => {
 
 
 //get all the posts by the user
-router.post('/getAllUserPosts', verifyToken, function(req, res, next){
+router.post('/getAllUserPosts', verifyToken, function (req, res, next) {
     let query = "SELECT user_name,pid,cid,title,description,time     FROM posts where user_name = '" + req.body.profileName + "';";
     connection.query(query, function (error, results, fields) {
         if (error) {
@@ -60,9 +60,10 @@ router.post('/getAllUserPosts', verifyToken, function(req, res, next){
 
 //get recent posts for home page
 
-router.post('/getRecentPosts', verifyToken, function(req, res, next){
+router.post('/getRecentPosts', verifyToken, function (req, res, next) {
     let query = "SELECT user_name,pid,cid,title,description,time  FROM posts ORDER BY time DESC;";
     connection.query(query, function (error, results, fields) {
+        console.log(error);
         if (error) {
             res.status(500).send({
                 status: "FAILURE",
@@ -78,10 +79,26 @@ router.post('/getRecentPosts', verifyToken, function(req, res, next){
     });
 });
 
-
+//delete a post
+router.post('/deletePost', verifyToken, function (req, res, next) {
+    let query = "DELETE FROM posts where pid = " + req.body.pid + ";";
+    connection.query(query, function (error, results, fields) {
+        if (error) {
+            res.status(500).send({
+                message: "not able to get the post",
+                pid: req.body.pid,
+            });
+            throw error;
+        };
+        res.status(200).send({
+            message: "post deleted",
+            pid: req.body.pid,
+        });
+    });
+});
 
 //get a single post
-router.post('/getPost', verifyToken, function(req, res, next){
+router.post('/getPost', verifyToken, function (req, res, next) {
     let query = "SELECT * FROM posts where pid = " + req.body.pid + ";";
     connection.query(query, function (error, results, fields) {
         if (error) {

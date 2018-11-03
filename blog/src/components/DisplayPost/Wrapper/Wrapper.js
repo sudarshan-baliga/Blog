@@ -42,8 +42,8 @@ class Wrapper extends Component {
             //get all the posts components
             let posts = [];
             let owner = "";
-            if (this.props.owner == "true")
-                owner = "true";
+            if (this.props.owner == true)
+                owner = true;   
             for (var i = 0; i < this.props.userPosts.length; i++) {
                 posts.push(<Post content={this.props.userPosts[i]} pid={this.props.userPosts[i].pid} key={this.props.userPosts[i].pid} owner={owner} />);
             }

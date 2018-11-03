@@ -1,10 +1,6 @@
 import axios from 'axios';
 const SERVER_URL = 'http://localhost:3001';
 
-export default function getAllPosts() {
-
-}
-
 export function getAllUserPosts(userData) {
     return (dispatch) => {
         axios({
@@ -60,6 +56,33 @@ export function getRecentPosts(data) {
     }
 }
 
+export function deletePost(data)
+{
+    return (dispatch) => {
+        axios({
+            method: 'post',
+            url: SERVER_URL + '/posts/deletePost',
+            data: data,
+            config: {
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            }
+        })
+            .then(function (response) {
+                console.log(response);
+                if (response.status == 200) {
+                    dispatch({ type: 'DELETE_POST_SUCCESS',payload: response.data });
+                }
+                else
+                    dispatch({ type: 'DELETE_POST_FAILURE', payload: response.data });
+            })
+            .catch(function (response) {
+                console.log(response);
+                dispatch({ type: 'DELETE_POST_FAILURE', payload: response.data });
+            });
+    }
+}
 export function getPost(data) {
     return (dispatch) => {
         axios({

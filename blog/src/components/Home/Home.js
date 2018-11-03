@@ -2,15 +2,13 @@ import React, { Component } from 'react';
 import Navbar from '../Navbar/Navbar';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { SendPost } from '../../actions'
 import PostWrapper from '../DisplayPost/Wrapper/Wrapper';
 
 import './Home.css';
 
 class Home extends Component {
     constructor(props) {
-        super(props);
-       
+        super(props); 
     }
 
     render() {
@@ -27,9 +25,4 @@ function mapStateToProps(data) {
     return { userData: data.userData.userData, jwt: data.userData.jwt };
 }
 
-function mapDispatchToProps(dispatch) {
-    return bindActionCreators({ SendPost }, dispatch);
-}
-
-
-export default connect(mapStateToProps, mapDispatchToProps)(Home);
+export default connect(mapStateToProps)(Home);

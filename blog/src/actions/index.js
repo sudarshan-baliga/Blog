@@ -40,34 +40,6 @@ export function SignOut() {
 
 
 
-export function SendPost(data) {
-    console.log(data);
-    return (dispatch) => {
-        axios({
-            method: 'post',
-            url: SERVER_URL + '/posts/writePost',
-            data: data,
-            config: {
-                headers: {
-                    'Content-Type': 'application/json',
-                    'x-access-token': data.jwt,
-                }
-            }
-        })
-            .then(function (response) {
-
-                if (response.data.auth == 'True')
-                    dispatch({ type: 'SEND_POST_SUCCESS', payload: response.data.userData });
-                else
-                    dispatch({ type: 'SEND_POST_FAILURE', payload: response.data });
-            })
-            .catch(function (response) {
-                dispatch({ type: 'SIGNIN_FAILURE', payload: response.data });
-            });
-    }
-}
-
-
 //changeStatus for required items
 export function changeStatus(data){
     console.log(data);

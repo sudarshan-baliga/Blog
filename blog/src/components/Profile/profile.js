@@ -12,19 +12,20 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 class Profile extends Component {
     constructor(props) {
         super(props);
-        this.state = { loading: true, profileData: [], owner: "true" };
+        this.state = { loading: true, profileData: [], owner: false };
     }
 
     componentWillMount() {
         var profileName = this.props.location.pathname.split('/').pop();
         console.log("mounting", profileName)
-        if (profileName == 'profile' || profileName == ''  )
+        if (profileName == 'profile' || profileName == '')
             profileName = this.props.userData.user_name;
 
         if (profileName == this.props.userData.user_name) {
-            this.setState(this.setState({ profileData: this.props.userData, loading: false }))
+            this.setState(this.setState({ profileData: this.props.userData, loading: false, owner: true }))
         }
         else {
+            console.log("getting new profile")
             let data = { profileName: profileName, jwt: this.props.jwt };
             this.props.getProfile(data);
         }
@@ -32,7 +33,9 @@ class Profile extends Component {
 
 
     componentWillReceiveProps(nextProps) {
-        if (this.props.location.pathname.split('/').pop() != 'profile')
+        console.log("next props in profile", nextProps);
+        let profileName= this.props.location.pathname.split('/').pop();
+        if ( profileName != 'profile' || profileName != ''  )
             this.setState({ loading: false, profileData: nextProps.currentProfile });
         else
             this.setState({ loading: false, profileData: nextProps.userData });
@@ -77,7 +80,6 @@ function mapDispatchToProps(dispatch) {
 
 
 function mapStateToProps(store) {
-    console.log(store.currentProfile);
     return { userData: store.userData.userData, currentProfile: store.currentProfile, jwt: store.userData.jwt };
 }
 

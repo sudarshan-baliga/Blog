@@ -19,7 +19,8 @@ import '../../../node_modules/react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import './WritePost.css';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { SendPost } from '../../actions'
+import axios from 'axios';
+const SERVER_URL = 'http://localhost:3001';
 
 const styles = theme => ({
   formControl: {
@@ -29,7 +30,7 @@ const styles = theme => ({
   selectEmpty: {
     marginTop: theme.spacing.unit * 2,
   },
-  title:{
+  title: {
     textTransform: 'capitalize',
   }
 });
@@ -40,7 +41,7 @@ var btnStyle = {
   color: "#fff",
   padding: "18px 36px",
   marginBottom: "30px",
-  marginLeft:"50px"
+  marginLeft: "50px"
 };
 
 
@@ -57,7 +58,8 @@ class WritePost extends Component {
       category: 'Programming',
       title: 'title',
       description: "description",
-      categoryId: '201'
+      categoryId: '201',
+      status: 0
     }
   }
 
@@ -80,21 +82,44 @@ class WritePost extends Component {
   onCategoryChange(e) {
     this.setState({ categoryId: e.target.value });
   }
+
+  componentWillReceiveProps(nextProps) {
+    console.log(nextProps.status);
+  }
   handlePostClick() {
     let postTitle = this.state.title;
     let postDescription = this.state.description;
     let postContent = draftToHtml(convertToRaw(this.state.editorState.getCurrentContent()));
     let cid = this.state.categoryId;
-    this.props.SendPost(
-      {
-        username: this.props.userData.user_name,
-        jwt: this.props.jwt,
-        cid: cid,
-        content: postContent,
-        title: postTitle,
-        description: postDescription
+    let outer = this;
+    let data =
+    {
+      username: this.props.userData.user_name,
+      jwt: this.props.jwt,
+      cid: cid,
+      content: postContent,
+      title: postTitle,
+      description: postDescription
+    };
+    axios({
+      method: 'post',
+      url: SERVER_URL + '/posts/writePost',
+      data: data,
+      config: {
+        headers: {
+          'Content-Type': 'application/json',
+          'x-access-token': data.jwt,
+        }
       }
-    );
+    })
+      .then(function (response) {
+        if (response.status == 201)
+          outer.props.history.push('/displaypost/' + response.data.data.postNumber);
+
+      })
+      .catch(function (response) {
+        console.log("exception ", response)
+      });
   }
 
 
@@ -159,15 +184,10 @@ class WritePost extends Component {
 }
 
 function mapStateToProps(data) {
-  return { userData: data.userData.userData, jwt: data.userData.jwt };
+  return { userData: data.userData.userData, jwt: data.userData.jwt, status: data.status.sendPost };
 }
-
-function mapDispatchToProps(dispatch) {
-  return bindActionCreators({ SendPost }, dispatch);
-}
-
 
 export default compose(
-  withStyles(styles, { }),
-  connect(mapStateToProps, mapDispatchToProps)
+  withStyles(styles, {}),
+  connect(mapStateToProps)
 )(WritePost);
