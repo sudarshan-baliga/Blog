@@ -11,6 +11,8 @@ import Avatar from '@material-ui/core/Avatar';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { getPost } from '../../../actions/postActions';
+import { Link } from 'react-router-dom';
+
 import CircularProgress from '@material-ui/core/CircularProgress';
 import './Content.css';
 import compose from 'recompose/compose';
@@ -80,17 +82,18 @@ class DisplayPostContent extends Component {
                 <div>
                     <NavBar />
                     <div className="postContent boxShadow">
-                        <CardHeader
-                            avatar={
-                                <Avatar aria-label="Recipe" className={classes.avatar}>
-                                    {this.state.author[0]}
-                                </Avatar>
-                            }
-                            title={this.state.author}
-                            subheader={this.state.time}
-                            className="cardHeader"
-                        />
-
+                        <Link to={"/profile/" + this.state.author}>
+                            <CardHeader
+                                avatar={
+                                    <Avatar aria-label="Recipe" className={classes.avatar}>
+                                        {this.state.author[0]}
+                                    </Avatar>
+                                }
+                                title={"@" + this.state.author}
+                                subheader={this.state.time}
+                                className="cardHeader"
+                            />
+                        </Link>
                         <h3 className="title">
                             {this.state.title}
                         </h3>
@@ -102,7 +105,7 @@ class DisplayPostContent extends Component {
                             editorClassName="post-editor"
                         />
                     </div>
-                    <Comments/>
+                    <Comments />
                 </div>
             );
     }

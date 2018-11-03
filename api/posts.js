@@ -19,7 +19,7 @@ router.post('/writePost', verifyToken, (req, res, next) => {
         };
         postNum = results[0].postNum + 1;
         //insert the post
-        query = "INSERT INTO posts VALUES(" + postNum + ",'" + req.userName + "'," + req.body.cid + ",'" + req.body.title + "','" + req.body.description + "','" + req.body.content + "', NOW());";
+        query = "INSERT INTO posts VALUES(" + connection.escape(postNum) + "," + connection.escape(req.userName) + "," + req.body.cid + "," + connection.escape(req.body.title) + "," + connection.escape(req.body.description) + "," + connection.escape(req.body.content) + ", NOW());";
         console.log(query);
         connection.query(query, function (error, results, fields) {
             if (error) {
@@ -41,7 +41,7 @@ router.post('/writePost', verifyToken, (req, res, next) => {
 
 //get all the posts by the user
 router.post('/getAllUserPosts', verifyToken, function (req, res, next) {
-    let query = "SELECT user_name,pid,cid,title,description,time     FROM posts where user_name = '" + req.body.profileName + "';";
+    let query = "SELECT user_name,pid,cid,title,description,time     FROM posts where user_name = " + connection.escape(req.body.profileName) + ";";
     connection.query(query, function (error, results, fields) {
         if (error) {
             res.status(500).send({
@@ -81,7 +81,7 @@ router.post('/getRecentPosts', verifyToken, function (req, res, next) {
 
 //delete a post
 router.post('/deletePost', verifyToken, function (req, res, next) {
-    let query = "DELETE FROM posts where pid = " + req.body.pid + ";";
+    let query = "DELETE FROM posts where pid = " + connection.escape(req.body.pid) + ";";
     connection.query(query, function (error, results, fields) {
         if (error) {
             res.status(500).send({
@@ -99,7 +99,7 @@ router.post('/deletePost', verifyToken, function (req, res, next) {
 
 //get a single post
 router.post('/getPost', verifyToken, function (req, res, next) {
-    let query = "SELECT * FROM posts where pid = " + req.body.pid + ";";
+    let query = "SELECT * FROM posts where pid = " + connection.escape(req.body.pid) + ";";
     connection.query(query, function (error, results, fields) {
         if (error) {
             res.status(500).send({

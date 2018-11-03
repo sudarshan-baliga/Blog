@@ -34,7 +34,7 @@ class Wrapper extends Component {
         if (this.state.loading) {
             return (
                 <div>
-                    <CircularProgress  size={200} />
+                    <CircularProgress size={200} />
                 </div>
             );
         }
@@ -43,11 +43,12 @@ class Wrapper extends Component {
             let posts = [];
             let owner = "";
             if (this.props.owner == true)
-                owner = true;   
+                owner = true;
             for (var i = 0; i < this.props.userPosts.length; i++) {
+
                 posts.push(<Post content={this.props.userPosts[i]} pid={this.props.userPosts[i].pid} key={this.props.userPosts[i].pid} owner={owner} />);
             }
-            
+
             return (
                 <React.Fragment>
                     <div className="postsWrapper">
@@ -60,7 +61,13 @@ class Wrapper extends Component {
             let posts = [];
             let owner = "false";
             for (var i = 0; i < this.props.recentPosts.length; i++) {
-                posts.push(<Post content={this.props.recentPosts[i]} pid={this.props.recentPosts[i].pid} key={this.props.recentPosts[i].pid} owner={owner} />);
+                if (!isNaN(this.props.filter)) {
+                    if (this.props.filter == this.props.recentPosts[i].cid)
+                        posts.push(<Post content={this.props.recentPosts[i]} pid={this.props.recentPosts[i].pid} key={this.props.recentPosts[i].pid} owner={owner} />);
+                }
+                else
+                    posts.push(<Post content={this.props.recentPosts[i]} pid={this.props.recentPosts[i].pid} key={this.props.recentPosts[i].pid} owner={owner} />);
+
             }
             return (
                 <React.Fragment>
@@ -73,7 +80,7 @@ class Wrapper extends Component {
     }
 }
 
-function mapStateToProps(data){
+function mapStateToProps(data) {
     return { jwt: data.userData.jwt, userPosts: data.posts.userPosts, recentPosts: data.recentPosts.userPosts };
 }
 

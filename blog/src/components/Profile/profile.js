@@ -9,6 +9,7 @@ import { getProfile } from '../../actions/profileActions';
 import { bindActionCreators } from 'redux';
 import CircularProgress from '@material-ui/core/CircularProgress';
 
+
 class Profile extends Component {
     constructor(props) {
         super(props);
@@ -66,6 +67,7 @@ class Profile extends Component {
                 {/* <Typography variant="title" component="h1" className = "title descriptionHelper"  >
                                Posts by the user
                 </Typography> */}
+                
                 <div>
                     <PostWrapper type="user" name={this.state.profileData.user_name} owner={this.state.owner} />
                 </div>

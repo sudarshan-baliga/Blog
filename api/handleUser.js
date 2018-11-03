@@ -7,7 +7,7 @@ var createToken = require('../lib/createToken');
 
 //handle signin
 router.post('/signin', (req, res, next) => {
-  let query = 'SELECT * from Users where user_name = \'' + req.body.userName + '\' AND hash = \'' + req.body.password + '\';';
+  let query = "SELECT * from Users where user_name = " + connection.escape(req.body.userName) + " AND hash = " + connection.escape(req.body.password) + ";";
   console.log('signin request recieved from ', req.body)
   connection.query(query, function (error, results, fields) {
     if (error) throw error;

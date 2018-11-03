@@ -3,6 +3,7 @@ var router = express.Router();
 var verifyToken = require('../lib/verifyToken');
 var connection = require('../lib/db');
 
+
 //add comment 
 router.post('/writecomment', verifyToken, (req, res, next) => {
     //get the number of comments to create the comment  id
@@ -48,7 +49,7 @@ router.post('/writecomment', verifyToken, (req, res, next) => {
 
 //get all the comments
 router.post('/getAllComments', verifyToken, function (req, res, next) {
-    let query = "SELECT *  FROM comments where pid = " + req.body.pid + ";";
+    let query = "SELECT *  FROM comments where pid = " + connection.escape(req.body.pid) + ";";
     connection.query(query, function (error, results, fields) {
         if (error) {
             res.status(500).send({

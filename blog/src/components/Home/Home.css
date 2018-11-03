@@ -1,0 +1,13 @@
+.categories {
+    margin: 40px auto;
+    max-width: 75%;    
+    padding: 10px 0;
+}
+
+.categoryChips {
+    margin: 5px;
+    background-color: #448AFF
+    !important;
+    color: #fff !important;
+}
+

@@ -12,6 +12,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
+import Snackbar from '@material-ui/core/Snackbar';
 import compose from 'recompose/compose';
 import { convertToRaw } from 'draft-js';
 import draftToHtml from 'draftjs-to-html';
@@ -45,7 +46,6 @@ var btnStyle = {
 };
 
 
-
 class WritePost extends Component {
   constructor(props) {
     super(props);
@@ -59,28 +59,36 @@ class WritePost extends Component {
       title: 'title',
       description: "description",
       categoryId: '201',
-      status: 0
+      error: false,
+      errMessage: "fdfd"
     }
   }
 
 
+
   onEditorStateChange = (editorState) => {
     this.setState({
-      editorState
+      editorState,
     });
   };
 
 
   onTitleChange(e) {
-    this.setState({ 'title': e.target.value });
+    if (e.target.value.length > 50)
+      this.setState({ error: "True", errMessage: "Too long text please reduce the size" });
+    else
+      this.setState({ error: false, 'title': e.target.value });
   }
 
   onDescriptionChange(e) {
-    this.setState({ 'description': e.target.value });
+    if (e.target.value.length > 500)
+      this.setState({ error: "True", errMessage: "Too long text please reduce the size" });
+    else
+      this.setState({ error: false, 'description': e.target.value });
   }
 
   onCategoryChange(e) {
-    this.setState({ categoryId: e.target.value });
+    this.setState({ error: false, categoryId: e.target.value });
   }
 
   componentWillReceiveProps(nextProps) {
@@ -90,36 +98,40 @@ class WritePost extends Component {
     let postTitle = this.state.title;
     let postDescription = this.state.description;
     let postContent = draftToHtml(convertToRaw(this.state.editorState.getCurrentContent()));
-    let cid = this.state.categoryId;
-    let outer = this;
-    let data =
-    {
-      username: this.props.userData.user_name,
-      jwt: this.props.jwt,
-      cid: cid,
-      content: postContent,
-      title: postTitle,
-      description: postDescription
-    };
-    axios({
-      method: 'post',
-      url: SERVER_URL + '/posts/writePost',
-      data: data,
-      config: {
-        headers: {
-          'Content-Type': 'application/json',
-          'x-access-token': data.jwt,
+    if (postContent.length > 60000)
+      this.setState({ error: "True", errMessage: "Post content too long please reduce the length and try again" });
+    else {
+      let cid = this.state.categoryId;
+      let outer = this;
+      let data =
+      {
+        username: this.props.userData.user_name,
+        jwt: this.props.jwt,
+        cid: cid,
+        content: postContent,
+        title: postTitle,
+        description: postDescription
+      };
+      axios({
+        method: 'post',
+        url: SERVER_URL + '/posts/writePost',
+        data: data,
+        config: {
+          headers: {
+            'Content-Type': 'application/json',
+            'x-access-token': data.jwt,
+          }
         }
-      }
-    })
-      .then(function (response) {
-        if (response.status == 201)
-          outer.props.history.push('/displaypost/' + response.data.data.postNumber);
-
       })
-      .catch(function (response) {
-        console.log("exception ", response)
-      });
+        .then(function (response) {
+          if (response.status == 201)
+            outer.props.history.push('/displaypost/' + response.data.data.postNumber);
+
+        })
+        .catch(function (response) {
+          console.log("exception ", response)
+        });
+    }
   }
 
 
@@ -178,6 +190,14 @@ class WritePost extends Component {
           </FormControl>
           <Button style={btnStyle} onClick={this.handlePostClick}>Post</Button>
         </div>
+        <Snackbar
+          anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+          open={this.state.error}
+          ContentProps={{
+            'aria-describedby': 'message-id',
+          }}
+          message={<span id="message-id">{this.state.errMessage}</span>}
+        />
       </div>
     );
   }

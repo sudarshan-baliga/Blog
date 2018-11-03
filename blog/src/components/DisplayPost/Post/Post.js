@@ -84,7 +84,7 @@ function Posts(props) {
                             </Avatar>
                         }
                         action={deleteBtn}
-                        title={props.content.user_name}
+                        title={"@"+props.content.user_name}
                         subheader={props.content.time}
                         className="cardHeader"
                     />
@@ -93,11 +93,9 @@ function Posts(props) {
                     <Link to={"/displaypost/" + props.pid}>
                         <CardMedia
                             component="img"
-                            alt="Contemplative Reptile"
                             className={classes.media}
                             height="250"
                             image={image}
-                            title="Contemplative Reptile"
                         />
                         <CardContent>
                             <Typography gutterBottom variant="title" component="h1" className="title">
