@@ -10,9 +10,9 @@ app.use(bodyParser.urlencoded({
     extended: true
 }));  
 
-
 app.use("/", api);
 
+app.use(express.static("./build"));
 app.listen(process.env.PORT || 3001, () => {
     console.log("listening to port 3001");
 });

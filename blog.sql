@@ -1,1 +1,143 @@
-Terminal close -- exit!
+-- MySQL dump 10.13  Distrib 5.7.24, for Linux (x86_64)
+--
+-- Host: localhost    Database: blog
+-- ------------------------------------------------------
+-- Server version	5.7.24-0ubuntu0.18.04.1
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+--
+-- Table structure for table `Users`
+--
+
+DROP TABLE IF EXISTS `Users`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `Users` (
+  `user_name` varchar(20) NOT NULL,
+  `hash` varchar(100) NOT NULL,
+  `details` varchar(500) DEFAULT NULL,
+  `fname` varchar(20) DEFAULT NULL,
+  `lname` varchar(20) DEFAULT NULL,
+  PRIMARY KEY (`user_name`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `Users`
+--
+
+LOCK TABLES `Users` WRITE;
+/*!40000 ALTER TABLE `Users` DISABLE KEYS */;
+INSERT INTO `Users` VALUES ('ss','1234','fdsdsf','dsf','fdsfds'),('suda465gergdrfg','1234fsda','fsdafasdfads','fasdfasdf','fsdafasdfads'),('sudafdsfarshan','1234','adfs','fads','adfs'),('sudarshan','1234','Hello I am Super man. I am from planet krypton. I got stronger and better power over the time.i am a ninja warrior. I am from planet krypton. I got stronger and better power over the time.i am a ninja warrior. I am from planet krypton. I got stronger and better power over the time.','super','man'),('sudarshan2','1234','gfdsg','gfd','gfdsg'),('sudarshan231','1234','fasdsdfa','sdfa','fasdsdfa'),('sudarshan3','1234','gfdsg','gfd','gfdsg'),('sudarshan33','1234','sdff','fdsaf','sdff'),('sudarshan55','1234','fasd','fdfg','fasd'),('sudarshan553fsdaf','1234','asdfasdf','fsdafds','asdfasdf'),('sudarshan99','1234','Hi I am sudarshan ','sudarshan','Hi I am sudarshan '),('sudarshanfdsfa','1234','','a',''),('sushanth','1234','Hello I am sushanth','sushanth','vokkunaya'),('sushanth22','1234','sushanth','ss','I am sushanth');
+/*!40000 ALTER TABLE `Users` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `category`
+--
+
+DROP TABLE IF EXISTS `category`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `category` (
+  `cid` int(11) NOT NULL,
+  `cname` varchar(30) DEFAULT NULL,
+  `cdescription` varchar(50) DEFAULT NULL,
+  PRIMARY KEY (`cid`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `category`
+--
+
+LOCK TABLES `category` WRITE;
+/*!40000 ALTER TABLE `category` DISABLE KEYS */;
+INSERT INTO `category` VALUES (201,'Programming','blogs related to programming'),(202,'cooking','The posts related to cooking'),(203,'Travel','The posts related to Travelling');
+/*!40000 ALTER TABLE `category` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `comments`
+--
+
+DROP TABLE IF EXISTS `comments`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `comments` (
+  `cid` int(11) NOT NULL,
+  `pid` int(11) DEFAULT NULL,
+  `user_name` varchar(20) DEFAULT NULL,
+  `content` varchar(100) DEFAULT NULL,
+  `time` datetime DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`cid`),
+  KEY `pid` (`pid`),
+  KEY `user_name` (`user_name`),
+  CONSTRAINT `comments_ibfk_1` FOREIGN KEY (`pid`) REFERENCES `posts` (`pid`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `comments_ibfk_2` FOREIGN KEY (`user_name`) REFERENCES `Users` (`user_name`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `comments`
+--
+
+LOCK TABLES `comments` WRITE;
+/*!40000 ALTER TABLE `comments` DISABLE KEYS */;
+INSERT INTO `comments` VALUES (1,1,'sudarshan','Hello','2018-11-03 10:50:49'),(2,1,'sudarshan','2019 anyone ?','2018-11-03 10:51:11'),(5,1,'sudarshan','fdsfds','2018-11-03 12:23:43'),(6,1,'sudarshan','ghj','2018-11-03 19:42:06'),(7,1,'sudarshan','fsd','2018-11-05 10:00:21'),(8,1,'sudarshan','fdas','2018-11-05 10:01:15'),(9,6,'sudarshan','Very tasty','2018-11-05 11:41:48'),(10,6,'sushanth','Yeah very tasty','2018-11-05 11:42:35'),(11,7,'sudarshan','Very nice experience','2018-11-05 11:50:53'),(12,1,'sudarshan','dsf','2018-11-05 16:06:24');
+/*!40000 ALTER TABLE `comments` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `posts`
+--
+
+DROP TABLE IF EXISTS `posts`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `posts` (
+  `pid` int(11) NOT NULL,
+  `user_name` varchar(20) DEFAULT NULL,
+  `cid` int(11) DEFAULT NULL,
+  `title` varchar(100) DEFAULT NULL,
+  `description` text,
+  `content` text,
+  `time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`pid`),
+  KEY `user_name` (`user_name`),
+  KEY `cid` (`cid`),
+  CONSTRAINT `posts_ibfk_1` FOREIGN KEY (`user_name`) REFERENCES `Users` (`user_name`),
+  CONSTRAINT `posts_ibfk_2` FOREIGN KEY (`cid`) REFERENCES `category` (`cid`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `posts`
+--
+
+LOCK TABLES `posts` WRITE;
+/*!40000 ALTER TABLE `posts` DISABLE KEYS */;
+INSERT INTO `posts` VALUES (1,'sudarshan',201,'React UI Component Playgrounds for 2018','11 React UI Component Playgrounds for 2018. I will be listing some of the coo react libraries which were made available recently.','<h2 style=\"text-align:start;\"><span style=\"color: rgba(0,0,0,0.54);background-color: rgb(255,255,255);font-size: 28px;font-family: medium-content-sans-serif-font, \"Lucida Grande\", \"Lucida Sans Unicode\", \"Lucida Sans\", Geneva, Arial, sans-serif;\">Useful online playgrounds and editors for your UI components</span></h2>\n<p style=\"text-align:start;\"><span style=\"color: rgba(0,0,0,0.84);background-color: rgb(255,255,255);font-size: 21px;font-family: medium-content-serif-font, Georgia, Cambria, \"Times New Roman\", Times, serif;\">As the age of components is upon us, the building blocks of our applications UI become a bigger part of our development process.</span></p>\n<p style=\"text-align:start;\"><span style=\"color: rgba(0,0,0,0.84);background-color: rgb(255,255,255);font-size: 21px;font-family: medium-content-serif-font, Georgia, Cambria, \"Times New Roman\", Times, serif;\">When building with UI components, development speed and the ability to organize and share components becomes critical in the process.</span></p>\n<p style=\"text-align:start;\"><span style=\"color: rgba(0,0,0,0.84);background-color: rgb(255,255,255);font-size: 21px;font-family: medium-content-serif-font, Georgia, Cambria, \"Times New Roman\", Times, serif;\">Many tools were formed in order to aid in this workflow, from docs builders to live online playgrounds and catalogs to faster sharing.</span></p>\n<p style=\"text-align:start;\"><span style=\"color: rgba(0,0,0,0.84);background-color: rgb(255,255,255);font-size: 21px;font-family: medium-content-serif-font, Georgia, Cambria, \"Times New Roman\", Times, serif;\">To help you find the right tool, here is a short (unranked) rundown of some useful playgrounds to help you visualize, test, share and develop React components. Feel free to comment and add your own suggestions!</span></p>\n<h3><span style=\"color: rgba(0,0,0,0.84);background-color: rgb(255,255,255);font-size: 21px;font-family: medium-content-serif-font, Georgia, Cambria, \"Times New Roman\", Times, serif;\">1. Bit</span></h3>\n<p></p>\n<img src=\"https://camo.githubusercontent.com/2534a86b69b69823e5b2b9d26b37269e90d75893/68747470733a2f2f73746f726167652e676f6f676c65617069732e636f6d2f6269742d646f63732f72656163742d6865726f2d636f6d706f6e656e742532302832292e676966\" alt=\"undefined\" style=\"float:none;height: auto;width: auto\"/>\n<p style=\"text-align:start;\"><a href=\"https://bitsrc.io/\" target=\"_blank\"><span style=\"color: inherit;background-color: transparent;font-size: 21px;font-family: medium-content-serif-font, Georgia, Cambria, \"Times New Roman\", Times, serif;\"><strong>Bits</strong></span></a> <span style=\"color: rgba(0,0,0,0.84);background-color: rgb(255,255,255);font-size: 21px;font-family: medium-content-serif-font, Georgia, Cambria, \"Times New Roman\", Times, serif;\">component playground isnt the most feature-rich playground on the list.</span></p>\n<p style=\"text-align:start;\"><span style=\"color: rgba(0,0,0,0.84);background-color: rgb(255,255,255);font-size: 21px;font-family: medium-content-serif-font, Georgia, Cambria, \"Times New Roman\", Times, serif;\">However,</span> <span style=\"color: rgba(0,0,0,0.84);background-color: rgb(255,255,255);font-size: 21px;font-family: medium-content-serif-font, Georgia, Cambria, \"Times New Roman\", Times, serif;\">Bit (</span><a href=\"https://github.com/teambit/bit\" target=\"_blank\"><span style=\"color: inherit;background-color: transparent;font-size: 21px;font-family: medium-content-serif-font, Georgia, Cambria, \"Times New Roman\", Times, serif;\">GitHub</span></a><span style=\"color: rgba(0,0,0,0.84);background-color: rgb(255,255,255);font-size: 21px;font-family: medium-content-serif-font, Georgia, Cambria, \"Times New Roman\", Times, serif;\">)</span> <span style=\"color: rgba(0,0,0,0.84);background-color: rgb(255,255,255);font-size: 21px;font-family: medium-content-serif-font, Georgia, Cambria, \"Times New Roman\", Times, serif;\">is the only tool that brings together a component playground with a full component discoverability, development and consumption workflow.</span></p>\n<p style=\"text-align:start;\"><span style=\"color: rgba(0,0,0,0.84);background-color: rgb(255,255,255);font-size: 21px;font-family: medium-content-serif-font, Georgia, Cambria, \"Times New Roman\", Times, serif;\">Bit lets you isolate components (including dependancies) and share them from any project into a visual collection, from which your team can find, use and develop them anywhere.</span></p>\n<p style=\"text-align:start;\"><span style=\"color: rgba(0,0,0,0.84);background-color: rgb(255,255,255);font-size: 21px;font-family: medium-content-serif-font, Georgia, Cambria, \"Times New Roman\", Times, serif;\">Every component is presented with a</span> <a href=\"https://blog.bitsrc.io/introducing-the-live-react-component-playground-d8c281352ee7\" target=\"_blank\"><span style=\"color: inherit;background-color: transparent;font-size: 21px;font-family: medium-content-serif-font, Georgia, Cambria, \"Times New Roman\", Times, serif;\">live playground</span></a><span style=\"color: rgba(0,0,0,0.84);background-color: rgb(255,255,255);font-size: 21px;font-family: medium-content-serif-font, Georgia, Cambria, \"Times New Roman\", Times, serif;\">, as well as test and build results which Bit runs for every component in isolation. If the component has JSDocs or .md files, Bit will auto-present the components docs as well.</span></p>\n<p style=\"text-align:start;\"><span style=\"color: rgba(0,0,0,0.84);background-color: rgb(255,255,255);font-size: 21px;font-family: medium-content-serif-font, Georgia, Cambria, \"Times New Roman\", Times, serif;\">Once you choose a component you wish to use, you can install it (and only it) using NPM/Yarn -or- use Bit to import and develop it right from any project.</span></p>\n<p style=\"text-align:start;\"><span style=\"color: rgba(0,0,0,0.84);background-color: rgb(255,255,255);font-size: 21px;font-family: medium-content-serif-font, Georgia, Cambria, \"Times New Roman\", Times, serif;\">Through Bit your team can organize and share components, forming a unified hub for your component design system and development in one place. Any team member can share components, update changes and stay in sync.</span></p>\n<h3 style=\"text-align:start;\"><span style=\"color: rgba(0,0,0,0.84);background-color: rgb(255,255,255);font-size: 21px;font-family: medium-content-serif-font, Georgia, Cambria, \"Times New Roman\", Times, serif;\">2. </span><span style=\"color: rgba(0,0,0,0.84);background-color: rgb(255,255,255);font-size: 34px;font-family: medium-content-sans-serif-font, \"Lucida Grande\", \"Lucida Sans Unicode\", \"Lucida Sans\", Geneva, Arial, sans-serif;\">Codesandbox</span></h3>\n<p></p>\n<img src=\"https://cdn-images-1.medium.com/max/1200/1*xUCCCP8hLcAa4vgjKAU_vg.gif\" alt=\"undefined\" style=\"float:none;height: auto;width: auto\"/>\n<p style=\"text-align:start;\"><a href=\"https://codesandbox.io/\" target=\"_blank\"><span style=\"color: inherit;background-color: transparent;font-size: 21px;font-family: medium-content-serif-font, Georgia, Cambria, \"Times New Roman\", Times, serif;\"><strong>Codesandbox</strong></span></a> <span style=\"color: rgba(0,0,0,0.84);background-color: rgb(255,255,255);font-size: 21px;font-family: medium-content-serif-font, Georgia, Cambria, \"Times New Roman\", Times, serif;\">is a great way to play with components online. Its awesome makers</span> <a href=\"https://hackernoon.com/codesandbox-an-online-react-editor-b8945ce095d2\" target=\"_blank\"><span style=\"color: inherit;background-color: transparent;font-size: 21px;font-family: medium-content-serif-font, Georgia, Cambria, \"Times New Roman\", Times, serif;\">describe it</span></a> <span style=\"color: rgba(0,0,0,0.84);background-color: rgb(255,255,255);font-size: 21px;font-family: medium-content-serif-font, Georgia, Cambria, \"Times New Roman\", Times, serif;\">as “<em>an online code editor. It automates things like transpiling, bundling and dependency management for you so you can easily create a new project in a single click. After creating something interesting you can show it to others by just sharing the url. CodeSandbox features a live preview to show the result of the code while youre typing</em>”.</span></p>\n<p style=\"text-align:start;\"><span style=\"color: rgba(0,0,0,0.84);background-color: rgb(255,255,255);font-size: 21px;font-family: medium-content-serif-font, Georgia, Cambria, \"Times New Roman\", Times, serif;\">With the</span> <a href=\"https://hackernoon.com/announcing-codesandbox-2-5-be767d15ffd\" target=\"_blank\"><span style=\"color: inherit;background-color: transparent;font-size: 21px;font-family: medium-content-serif-font, Georgia, Cambria, \"Times New Roman\", Times, serif;\">release of v2.5</span></a><span style=\"color: rgba(0,0,0,0.84);background-color: rgb(255,255,255);font-size: 21px;font-family: medium-content-serif-font, Georgia, Cambria, \"Times New Roman\", Times, serif;\">, new UI improvements such as a new sidebar, “view-mode”, floating previews and more were introduced. It also provides configuration support, a neat integration to GitHub and an Angular template.</span></p>\n<p style=\"text-align:start;\"><span style=\"color: rgba(0,0,0,0.84);background-color: rgb(255,255,255);font-size: 21px;font-family: medium-content-serif-font, Georgia, Cambria, \"Times New Roman\", Times, serif;\">The Codesandbox client is also released to</span> <a href=\"https://github.com/CompuIves/codesandbox-client\" target=\"_blank\"><span style=\"color: inherit;background-color: transparent;font-size: 21px;font-family: medium-content-serif-font, Georgia, Cambria, \"Times New Roman\", Times, serif;\">GitHub</span></a><span style=\"color: rgba(0,0,0,0.84);background-color: rgb(255,255,255);font-size: 21px;font-family: medium-content-serif-font, Georgia, Cambria, \"Times New Roman\", Times, serif;\">.</span></p>\n<h3 style=\"text-align:start;\"><span style=\"color: rgba(0,0,0,0.84);background-color: rgb(255,255,255);font-size: 21px;font-family: medium-content-serif-font, Georgia, Cambria, \"Times New Roman\", Times, serif;\">3. </span><span style=\"color: rgba(0,0,0,0.84);background-color: rgb(255,255,255);font-size: 34px;font-family: medium-content-sans-serif-font, \"Lucida Grande\", \"Lucida Sans Unicode\", \"Lucida Sans\", Geneva, Arial, sans-serif;\">StoryBook and Styleguidist</span></h3>\n<p></p>\n<img src=\"https://camo.githubusercontent.com/afa6a5df98c90ddb6b23b0fe6fba6b75c96f42b7/687474703a2f2f692e696d6775722e636f6d2f374349415770422e676966\" alt=\"undefined\" style=\"float:none;height: auto;width: auto\"/>\n<p style=\"text-align:start;\"><span style=\"color: rgba(0,0,0,0.84);background-color: rgb(255,255,255);font-size: 21px;font-family: medium-content-serif-font, Georgia, Cambria, \"Times New Roman\", Times, serif;\">StoryBook helps you develop components in isolation from your app, which also encourages better reusability and testability for your components.</span></p>\n<p style=\"text-align:start;\"><span style=\"color: rgba(0,0,0,0.84);background-color: rgb(255,255,255);font-size: 21px;font-family: medium-content-serif-font, Georgia, Cambria, \"Times New Roman\", Times, serif;\">You can browse components from your library, play with their properties and get an instant impression with hot-reload on the web. You can find some popular examples</span> <a href=\"https://storybook.js.org/examples/\" target=\"_blank\"><span style=\"color: inherit;background-color: transparent;font-size: 21px;font-family: medium-content-serif-font, Georgia, Cambria, \"Times New Roman\", Times, serif;\">here</span></a><span style=\"color: rgba(0,0,0,0.84);background-color: rgb(255,255,255);font-size: 21px;font-family: medium-content-serif-font, Georgia, Cambria, \"Times New Roman\", Times, serif;\">. Plugins can help make your development process faster, so you can shorten the cycle between code tweaking to visual output.</span></p>\n<p></p>\n','2018-10-27 10:53:28'),(6,'sudarshan',202,'Recipe for pani puri','Lets see the recipes required to make tasty panipuri','<ul>\n<li><span style=\"color: rgb(235,107,86);background-color: rgb(255,255,255);font-size: 15px;font-family: proxima-regular1, Calibri;\">2 cup semolina</span></li>\n<li><span style=\"color: rgb(235,107,86);background-color: rgb(255,255,255);font-size: 15px;font-family: proxima-regular1, Calibri;\">water as required</span></li>\n<li><span style=\"color: rgb(235,107,86);background-color: rgb(255,255,255);font-size: 15px;font-family: proxima-regular1, Calibri;\">3 tablespoon cumin powder</span></li>\n<li><span style=\"color: rgb(235,107,86);background-color: rgb(255,255,255);font-size: 15px;font-family: proxima-regular1, Calibri;\">5 green chilli</span></li>\n<li><span style=\"color: rgb(235,107,86);background-color: rgb(255,255,255);font-size: 15px;font-family: proxima-regular1, Calibri;\">1/2 teaspoon baking soda</span></li>\n<li><span style=\"color: rgb(235,107,86);background-color: rgb(255,255,255);font-size: 15px;font-family: proxima-regular1, Calibri;\">refined oil as required</span></li>\n<li><span style=\"color: rgb(235,107,86);background-color: rgb(255,255,255);font-size: 15px;font-family: proxima-regular1, Calibri;\">1 1/2 tablespoon black salt</span></li>\n<li><span style=\"color: rgb(235,107,86);background-color: rgb(255,255,255);font-size: 15px;font-family: proxima-regular1, Calibri;\">4 tablespoon crushed jaggery</span></li>\n<li><span style=\"color: rgb(235,107,86);background-color: rgb(255,255,255);font-size: 15px;font-family: proxima-regular1, Calibri;\">1 cup boiled chick peas</span></li>\n<li><span style=\"color: rgb(235,107,86);background-color: rgb(255,255,255);font-size: 15px;font-family: proxima-regular1, Calibri;\">tamrind chutney as required</span></li>\n<li><span style=\"color: rgb(235,107,86);background-color: rgb(255,255,255);font-size: 15px;font-family: proxima-regular1, Calibri;\">1 cup tamarind paste</span></li>\n<li><span style=\"color: rgb(235,107,86);background-color: rgb(255,255,255);font-size: 15px;font-family: proxima-regular1, Calibri;\">3 tablespoon roasted cumin powder</span></li>\n<li><span style=\"color: rgb(235,107,86);background-color: rgb(255,255,255);font-size: 15px;font-family: proxima-regular1, Calibri;\">1 cup coriander leaves</span></li>\n<li><span style=\"color: rgb(235,107,86);background-color: rgb(255,255,255);font-size: 15px;font-family: proxima-regular1, Calibri;\">6 tablespoon wheat flour</span></li>\n<li><span style=\"color: rgb(235,107,86);background-color: rgb(255,255,255);font-size: 15px;font-family: proxima-regular1, Calibri;\">salt as required</span></li>\n<li><span style=\"color: rgb(235,107,86);background-color: rgb(255,255,255);font-size: 15px;font-family: proxima-regular1, Calibri;\">1 1/2 cup mint leaves</span></li>\n<li><span style=\"color: rgb(235,107,86);background-color: rgb(255,255,255);font-size: 15px;font-family: proxima-regular1, Calibri;\">2 tablespoon boondi</span></li>\n<li><span style=\"color: rgb(235,107,86);background-color: rgb(255,255,255);font-size: 15px;font-family: proxima-regular1, Calibri;\">4 boiled,mashed potato</span></li>\n<li><span style=\"color: rgb(235,107,86);background-color: rgb(255,255,255);font-size: 15px;font-family: proxima-regular1, Calibri;\">green chutney as required</span></li>\n<li><span style=\"color: rgb(235,107,86);background-color: rgb(255,255,255);font-size: 15px;font-family: proxima-regular1, Calibri;\">black pepper as required</span></li>\n</ul>\n','2018-11-05 11:41:33'),(7,'sushanth',203,'The best travel experience of my life','My first and The best travel experience of my life which happend last month','<p><span style=\"color: rgb(84,172,210);font-size: 19px;font-family: LiberationSerif, \"Times New Roman\", Times, serif;\">SOME moments you experience while travelling end up completely blowing you away, in ways you\'d never have expected. They stay with you forever, and years later you still smile at the fond memories.</span></p>\n<p></p>\n<p style=\"text-align:start;\"><span style=\"color: rgb(84,172,210);font-size: 19px;font-family: LiberationSerif, \"Times New Roman\", Times, serif;\">For Vanessa Chiasson, a traveller who has ventured around the world and writes at</span><span style=\"color: rgb(84,172,210);\"> </span><a href=\"http://www.turnipseedtravel.com/\" target=\"_self\"><span style=\"color: rgb(84,172,210);background-color: transparent;font-size: 19px;font-family: LiberationSerif, \"Times New Roman\", Times, serif;\">TurnipseedTravel.com</span></a><span style=\"color: rgb(84,172,210);font-size: 19px;font-family: LiberationSerif, \"Times New Roman\", Times, serif;\">, a sunrise hot air balloon ride over Bagan, Burma, provided that jaw-dropping, heart-pounding moment of pure joy.</span></p>\n<p style=\"text-align:start;\"><span style=\"color: rgb(84,172,210);font-size: 19px;font-family: LiberationSerif, \"Times New Roman\", Times, serif;\">Ironically, it came after she had experienced</span><span style=\"color: rgb(84,172,210);\"> </span><a href=\"http://www.news.com.au/travel/travel-ideas/the-worst-travel-experience-of-my-life-the-overnight-train-from-bagan-to-yangon/story-e6frfqd9-1226811877389\" target=\"_self\"><span style=\"color: rgb(84,172,210);background-color: transparent;font-size: 19px;font-family: LiberationSerif, \"Times New Roman\", Times, serif;\">her worst travel moment ever - 20 hours of hell on a train trip</span></a><span style=\"color: rgb(84,172,210);\"> </span><span style=\"color: rgb(84,172,210);font-size: 19px;font-family: LiberationSerif, \"Times New Roman\", Times, serif;\">in the region. But this adventure far outweighed that nightmare ride.</span></p>\n<p style=\"text-align:start;\"><span style=\"color: rgb(84,172,210);font-size: 19px;font-family: LiberationSerif, \"Times New Roman\", Times, serif;\">I try to never lose track of how lucky I am that my work as a travel writer introduces me to extraordinary locations, experiences and people. Never has this been more in focus than during a recent hot air balloon ride over the spectacular ancient temples of Bagan. Without a doubt it stands alone as the most incredible, breathtaking travel experience of my life.</span></p>\n<p style=\"text-align:start;\"><span style=\"color: rgb(84,172,210);font-size: 19px;font-family: LiberationSerif, \"Times New Roman\", Times, serif;\">There are over 2200 temples and pagodas on the plains of Bagan, most constructed between the 11th and 13th century, the final markers of what was once a thriving kingdom. The plains of Bagan are home to the largest concentration of religious buildings in the world and, in addition to the religious and spiritual significance, the region holds special meaning for archaeologists, historians, seismologists, architects, linguists and artists.</span></p>\n<p style=\"text-align:start;\"><span style=\"color: rgb(84,172,210);font-size: 19px;font-family: LiberationSerif, \"Times New Roman\", Times, serif;\">To say that there\'s truly nothing like it in the world would be an understatement. Bagan is the place where travel dreams come true.</span></p>\n<p style=\"text-align:start;\"><span style=\"color: rgb(84,172,210);font-size: 19px;font-family: LiberationSerif, \"Times New Roman\", Times, serif;\">The sunrise hot air balloon rides are popular so it\'s best to book well in advance, but last minute travellers need not despair as standby tickets are often available at a slightly reduced rate 48 hours before departure.</span></p>\n<p style=\"text-align:start;\"><span style=\"color: rgb(84,172,210);font-size: 19px;font-family: LiberationSerif, \"Times New Roman\", Times, serif;\">We (Vanessa was travelling with her husband Ryan Wright) were given strict instructions to be ready for pick up at 5.10am and, true to their word, our bus arrived right on time - no small feat considering the state of some roads and the tardy habits of travellers.</span></p>\n<p style=\"text-align:start;\"><span style=\"color: rgb(84,172,210);font-size: 19px;font-family: LiberationSerif, \"Times New Roman\", Times, serif;\">It was a special ride. The Canadian built wooden bus that picked us up was brought over in World War II for the purposes of transporting troops. At the end of the war, the cost of shipping all the buses back to Canada was prohibitive and so they were left behind. Today the fleet has been lovingly restored and they must be some of the most unique buses in the world!</span></p>\n<p style=\"text-align:start;\"></p>\n<p></p>\n<iframe width=\"4\" height=\"4\" src=\"\" frameBorder=\"0\"></iframe>\n<p style=\"text-align:start;\"></p>\n<p></p>\n<img src=\"https://cdn.newsapi.com.au/image/v1/ed6032a8b46633753dd03623969360f4\" alt=\"The unique bus. Picture: Ryan Wright/Turnipseed Travel\" style=\"float:none;height: ;width: \"/>\n<p></p>\n<p style=\"text-align:left;\"></p>\n<p style=\"text-align:start;\"><span style=\"color: rgb(97,189,109);font-size: 19px;font-family: LiberationSerif, \"Times New Roman\", Times, serif;\">After picking up some additional guests, we made our way to the launch field. The pilots introduced themselves and explained the basics of ballooning. They were warm, friendly and funny and set my nerves at ease.</span></p>\n<p style=\"text-align:start;\"><span style=\"color: rgb(97,189,109);font-size: 19px;font-family: LiberationSerif, \"Times New Roman\", Times, serif;\">The pilots divided us into groups to balance out the baskets and gave us complimentary baseball hats. These were souvenirs with a practical purpose, as dust can enter the balloon while it is filling and later drop down on the passengers (we never noticed any falling dust, but we were thrilled to have the souvenirs). It was fascinating to watch the balloons being prepared. From the metres upon metres of rippling silk to the roar of the fire, it was an incredibly intricate process to observe.</span></p>\n<p style=\"text-align:start;\"><span style=\"color: rgb(97,189,109);\"><br></span></p>\n','2018-11-05 11:48:06'),(8,'sudarshan',203,'New ','fdasfdasfdsafads','<h3><span style=\"color: rgb(204,204,204);\">sdfafdsfds</span></h3>\n','2018-11-05 16:10:54');
+/*!40000 ALTER TABLE `posts` ENABLE KEYS */;
+UNLOCK TABLES;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+-- Dump completed on 2018-11-05 19:37:13

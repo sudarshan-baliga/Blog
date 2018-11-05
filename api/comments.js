@@ -7,7 +7,7 @@ var connection = require('../lib/db');
 //add comment 
 router.post('/writecomment', verifyToken, (req, res, next) => {
     //get the number of comments to create the comment  id
-    let query = "SELECT COUNT(*) as commentNum FROM comments";
+    let query = "SELECT MAX(cid) as commentNum FROM comments";
     let commentNum = 0;
     connection.query(query, function (error, results, fields) {
         if (error) {
